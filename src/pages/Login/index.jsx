@@ -3,11 +3,13 @@ import { StyledFormLogin, StyledMain, RegisterContainer } from "./styles";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 import * as yup from "yup";
 
-const LoginPage = ({ setAuthentication }) => {
+const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useContext(UserContext);
 
   const formSchema = yup.object().shape({
     email: yup.string().required("Email obrigatório").email("Email inválido"),
@@ -22,24 +24,10 @@ const LoginPage = ({ setAuthentication }) => {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit = (data) => {
-    axios
-      .post("https://kenziehub.herokuapp.com/sessions", data)
-      .then((response) => {
-        console.log(response);
-        window.localStorage.clear();
-        window.localStorage.setItem("authToken", response.data.token);
-        setAuthentication(true);
-      })
-      .catch((err) => console.log(err));
-
-    navigate("/dashboard", { replace: true });
-  };
-
   return (
     <StyledMain>
       <img src={logo} alt="Logo" />
-      <StyledFormLogin onSubmit={handleSubmit(onSubmit)}>
+      <StyledFormLogin onSubmit={handleSubmit(login)}>
         <div>
           <h1>Login</h1>
         </div>

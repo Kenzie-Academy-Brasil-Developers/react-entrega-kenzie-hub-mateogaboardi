@@ -68,7 +68,6 @@ export const StyledForm = styled.form`
   flex-direction: column;
   align-items: flex-start;
   padding: 28px 22px;
-  gap: 15px;
 
   background-color: var(--color-grey-3);
   box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
@@ -92,6 +91,8 @@ export const StyledForm = styled.form`
   }
 
   span {
+    margin-bottom: 2rem;
+
     font-weight: 400;
     font-size: 12.182px;
     line-height: 0px;
@@ -161,6 +162,8 @@ export const StyledForm = styled.form`
 `;
 
 export const Error = styled.p`
+  margin-bottom: 1rem;
+
   font-weight: 400;
   font-size: 12.182px;
   line-height: 22px;

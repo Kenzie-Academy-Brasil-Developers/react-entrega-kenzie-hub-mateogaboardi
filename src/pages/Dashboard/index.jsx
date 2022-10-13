@@ -1,41 +1,35 @@
 import {
   Container,
   ContainerInfo,
+  Containeritem,
   ContainerModules,
+  ContainerModulesHeader,
   StyledHeader,
   StyledMain,
 } from "./styles";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
 import logo from "./logo.png";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import plus from "./plus.png";
+import TechList from "../../Components/TechList";
+import AddModal from "../../Components/AddModal";
 
-const Dashboard = ({ setAuthentication }) => {
+const Dashboard = () => {
   const navigate = useNavigate();
-  const token = window.localStorage.getItem("authToken");
 
-  const [profile, setProfile] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
-  useEffect(() => {
-    const data = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    axios
-      .get("https://kenziehub.herokuapp.com/profile", data)
-      .then((response) => setProfile(response.data))
-      .catch((err) => console.log(err));
-  }, [token]);
+  const { user, loading } = useContext(UserContext);
 
   function logout() {
-    navigate("/login", { replace: true });
     window.localStorage.clear();
-    setAuthentication(false);
+    navigate("/login", { replace: true });
   }
 
-  console.log(profile);
+  if (loading) return <StyledMain />;
 
-  return (
+  return user ? (
     <>
       <StyledHeader>
         <Container>
@@ -46,21 +40,28 @@ const Dashboard = ({ setAuthentication }) => {
       <StyledMain>
         <ContainerInfo>
           <div>
-            <h1>Olá, {profile.name}</h1>
-            <p>{profile.course_module}</p>
+            <h1>Olá, {user.name}</h1>
+            <p>{user.course_module}</p>
           </div>
         </ContainerInfo>
-        <ContainerModules>
+        <ContainerModulesHeader>
           <div>
-            <h2>Que pena! Estamos em desenvolvimento :&#10088;</h2>
-            <h3>
-              Nossa aplicação está em desenvolvimento, em breve teremos
-              novidades.
-            </h3>
+            <h2>Tecnologias</h2>
+            <button onClick={() => setOpenModal(true)}>
+              <img src={plus} alt="Adicionar" />
+            </button>
           </div>
+        </ContainerModulesHeader>
+        <ContainerModules>
+          <Containeritem>
+            <TechList user={user} />
+          </Containeritem>
         </ContainerModules>
+        {openModal && <AddModal closeModal={setOpenModal} />}
       </StyledMain>
     </>
+  ) : (
+    <Navigate to="/login" />
   );
 };
 

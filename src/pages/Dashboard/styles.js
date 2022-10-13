@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledHeader = styled.header`
   width: 100%;
-  height: 5rem;
+  height: 6rem;
 
   display: flex;
   align-items: center;
@@ -74,7 +74,8 @@ export const StyledMain = styled.main`
 
 export const ContainerInfo = styled.div`
   width: 100%;
-  height: 7.375rem;
+  height: 9rem;
+  min-height: 9rem;
 
   display: flex;
   justify-content: center;
@@ -122,20 +123,20 @@ export const ContainerInfo = styled.div`
   }
 `;
 
-export const ContainerModules = styled.div`
+export const ContainerModulesHeader = styled.div`
   width: 100%;
-  height: 20rem;
+  height: 6.5rem;
 
   display: flex;
   justify-content: center;
 
   div {
     width: 80%;
+    height: 5rem;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
 
     @media screen and (min-width: 425px) {
       width: 70%;
@@ -146,15 +147,65 @@ export const ContainerModules = styled.div`
       font-size: 18px;
       line-height: 28px;
       color: var(--color-grey-0);
-
-      margin-bottom: 2rem;
     }
 
-    h3 {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
-      color: var(--color-grey-0);
+    button {
+      width: 2rem;
+      height: 2rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background-color: var(--color-grey-3);
+      border-radius: 4px;
+
+      cursor: pointer;
+
+      transition: 0.4s;
+
+      img {
+        margin: 0;
+      }
     }
+
+    button:hover {
+      background-color: var(--color-grey-2);
+    }
+  }
+`;
+
+export const ContainerModules = styled.section`
+  width: 100%;
+  height: 36rem;
+
+  display: flex;
+  justify-content: center;
+`;
+
+export const Containeritem = styled.div`
+  width: 80%;
+  height: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (min-width: 425px) {
+    width: 70%;
+  }
+
+  ul {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 22px 19px;
+    gap: 16px;
+
+    background: var(--color-grey-3);
+    border-radius: 4px;
   }
 `;

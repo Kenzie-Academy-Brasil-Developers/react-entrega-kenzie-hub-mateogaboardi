@@ -3,10 +3,13 @@ import { DivRegister, Error, Main, StyledForm, Title } from "./styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 import * as yup from "yup";
 
 const RegisterPage = () => {
+  const { registerFunc } = useContext(UserContext);
+
   const formSchema = yup.object().shape({
     name: yup.string().required("Nome obrigatório"),
     email: yup.string().required("Email obrigatório").email("Email inválido"),
@@ -39,15 +42,6 @@ const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    axios
-      .post("https://kenziehub.herokuapp.com/users", data)
-      .then((response) => console.log(response.data))
-      .catch((err) => console.log(err));
-
-    navigate("/login", { replace: true });
-  };
-
   return (
     <Main>
       <DivRegister>
@@ -56,7 +50,7 @@ const RegisterPage = () => {
           Voltar
         </button>
       </DivRegister>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm onSubmit={handleSubmit(registerFunc)}>
         <div>
           <h1>Crie sua conta</h1>
           <Title>Rapido e grátis, vamos nessa</Title>
