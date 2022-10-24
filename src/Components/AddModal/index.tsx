@@ -5,7 +5,16 @@ import { useContext } from "react";
 import { TechContext } from "../../contexts/TechContext";
 import * as yup from "yup";
 
-const AddModal = ({ closeModal }) => {
+interface IAddModalProps {
+  closeModal: any;
+}
+
+interface IAddModal {
+  title: string;
+  status: string;
+}
+
+const AddModal = ({ closeModal }: IAddModalProps) => {
   const { createTech } = useContext(TechContext);
 
   const formSchema = yup.object().shape({
@@ -17,7 +26,7 @@ const AddModal = ({ closeModal }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IAddModal>({
     resolver: yupResolver(formSchema),
   });
 

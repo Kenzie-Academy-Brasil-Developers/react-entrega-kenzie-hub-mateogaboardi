@@ -7,6 +7,15 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import * as yup from "yup";
 
+export interface IUserRegister {
+  name: string;
+  email: string;
+  password: string;
+  bio: string;
+  contact: string;
+  course_module: string;
+}
+
 const RegisterPage = () => {
   const { registerFunc } = useContext(UserContext);
 
@@ -17,14 +26,14 @@ const RegisterPage = () => {
       .string()
       .required("Senha obrigatório")
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Precisa conter 8 caracteres, Uma letra maiúscula, Uma minúscula, Um número e Um símbolo."
       ),
     confirm_password: yup
       .string()
       .oneOf([yup.ref("passoword")], "Deve ser idêntica a senha original")
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Precisa conter 8 caracteres, Uma letra maiúscula, Uma minúscula, Um número e Um símbolo."
       ),
     bio: yup.string().required("Campo obrigatório"),
@@ -36,7 +45,7 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IUserRegister>({
     resolver: yupResolver(formSchema),
   });
 

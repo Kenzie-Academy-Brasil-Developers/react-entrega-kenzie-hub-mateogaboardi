@@ -7,6 +7,11 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import * as yup from "yup";
 
+interface IUserLogin {
+  email: string;
+  password: string;
+}
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
@@ -20,7 +25,7 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IUserLogin>({
     resolver: yupResolver(formSchema),
   });
 

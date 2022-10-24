@@ -2,7 +2,13 @@ import { useContext } from "react";
 import { TechContext } from "../../contexts/TechContext";
 import { StyledLi } from "./styles";
 
-const ListItem = ({ title, status, techId }) => {
+interface IListItemProps {
+  title: string;
+  status: string;
+  techId: string;
+}
+
+const ListItem = ({ title, status, techId }: IListItemProps) => {
   const { deleteTech } = useContext(TechContext);
 
   return (
